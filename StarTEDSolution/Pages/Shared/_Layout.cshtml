@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@ViewData["Title"] - WebApplication1</title>
+        @*  ***** removed the link to bootstap **** <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /> *@
+        @*  ***** added link to Holiday.css **** *@
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/holiday.css@0.9.8" />
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/StarTEDSolution.styles.css" asp-append-version="true" />
+
+    </head>
+    <body>
+        <header>
+            <h1>A01 - Employees</h1>
+            <h2>Travis Simmons</h2>
+            <nav>
+                <a asp-area="" asp-page="/Index">StarTEDSolution</a>
+                <div>
+                    <ul>
+                        <li>
+                            <a asp-area="" asp-page="/Index"> 
+                                <img src="" alt="Logo Image" title="Go To Home" />
+                               
+                            </a>
+                        </li>
+                        <li>
+                            <span> Options</span>
+                            <ul style="margin:0"
+                            <li>
+                                <a asp-area="" asp-page="/Pages/Query">Employee Query</a>
+                            </li>
+
+                            <li>
+                                <a asp-area="" asp-page="/Pages/CRUD">Employee Data</a>
+                            <li/>
+                            </ul>
+     
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <div>
+            <main role="main">
+                @RenderBody()
+            </main>
+        </div>
+
+        <footer>
+            <div>
+            &copy; 2022 - StarTEDSolution - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            </div>
+        </footer>
+
+        <script src="~/js/site.js" asp-append-version="true"></script>
+
+        @await RenderSectionAsync("Scripts", required: false)
+    </body>
+</html>
