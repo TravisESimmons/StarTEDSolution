@@ -1,10 +1,30 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Default page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome To The Default Page!</h1>
+    <a asp-area="" asp-page="/Index">
+
+    </a>
+    <h2>Deliverables:</h2>
+
+    <h3>Query and CRUD</h3>
+
+    <h3>Query is: </h3>
+    <p> Is a question/service prompted by a user and fulfilled by the presentation layer to pull data from the database for a user to observe but not edit. In this instance, the purpose is to display the results of looking up employees by a partial name, whether it be First or Last, such as Joh for John, or Sea for Seales. Specifically for active, or "unreleased" employees. </p>
+
+    <h3>CRUD is: </h3>
+    <p>
+        Create/Read/Update/Delete
+        In most instances, CRUD is designed to edit and manage data generated as a result of pulling data and making it observable to the user. From there, CRUD offers the user more utility in editing and updating the data as its presented in the database. Deleting typically makes up the final option, although in the instance of the Employee scenario I will be coding - the CRUD will NOT allow the user to delete the Employee's data, but rather offer a variable titled "ReleaseDate" to indicate the Employee is no longer at the company.
+    </p>
+
+    <h2>Entity Relationship Diagram: Scenario A01 - Employees </h2>
+    <img src="~/img/A01.png" alt="" title="" />
+    <h2>Site Styling: Holiday</h2>
+
+    <h2> Known Bugs: None </h2>
 </div>

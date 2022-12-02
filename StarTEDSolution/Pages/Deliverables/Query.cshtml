@@ -1,4 +1,133 @@
-﻿@page
+﻿@page "{SearchArg?}/{EmployeeID?}"
 @model StarTEDSolution.Pages.Deliverables.QueryModel
 @{
+    ViewData["Title"] = "Query";
 }
+
+<div class="text-center">
+    <h1 class="display-4">This is the Query Page!!!</h1>
+    <a asp-area="" asp-page="/Query"></a>
+    <img src="~/img/A01Mockup.png" alt="" title="" />
+    <p>The purpose of this page is to generate and display the results of searching the database of Employees by a partial name. Specifically for the database's "active Employees". This must be possible by Firstname and Lastname search queries. It will function as a drop down display, and the results will appear in alphabetic order. The display must include the fullname, program and position data. As well as options to clear the entered search, a paginator for page selecting and drop-down menus to navigate the position and programs data within the search results. </p>
+</div>
+
+<h1>Employees by Partial Name</h1>
+<form method="post">
+
+ 
+    <label>
+        Enter a partial name
+        <input type="text" asp-for="SearchArg"
+               placeholder="Enter the partial employee name" required />
+    </label>
+    <br />
+
+        <button type="submit" asp-page-handler="Search">Search</button>
+        <button type="submit" asp-page-handler="Clear" formnovalidate>Clear</button>
+
+    @if (Model.EmployeeInfo != null)
+    {
+        if (Model.EmployeeInfo.Count() == 0)
+        {
+            <p style="color: red; font-weight: bold; font-size: large">
+                There are no Employees matching your search request
+            </p>
+        }
+        else
+        {
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>Program</th>
+                    </tr>
+                </thead>
+                  <tbody>
+
+                    @foreach (var item in Model.EmployeeInfo)
+                    {
+                        <tr>
+
+                            <td>
+                                <a href="/Deliverables/CRUD/@item.LastName,@item.FirstName">
+                                    Edit 
+                                </a>
+                            </td>
+
+                            <td>@item.LastName, @item.FirstName</td>
+                            
+                         
+                            <td>
+                            <select>
+                                    @foreach (var position in Model.PositionInfo)
+                                    {
+                                            if (position.Description == position.Description)
+                                        {
+                                            <option value="@position.Description " selected>@position.Description </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@position.Description">@position.Description </option>
+                                        }
+                                    }
+                            </select>
+                            </td>
+
+                            
+                                
+                          
+                         
+                            <td>
+                            <select>
+                                    @foreach (var programs in Model.ProgramInfo)
+                                    {
+                                            if (programs.ProgramName == programs.ProgramName)
+                                        {
+                                            <option value="Programs.ProgramID " selected>@programs.ProgramName </option>
+                                        }
+                                        else
+                                        {
+                                             <option value="@programs.ProgramName ">@programs.ProgramName </option>
+                                        }
+                                    }
+                            </select>
+                            </td>
+                            
+                        </tr>
+                    }
+                 </tbody>
+
+              
+                    
+            </table>
+
+            <tfoot>
+                @*  *** ERROR : "Title: Query - Object instance not set " *** *@
+                <tr>
+                    @{
+
+                        foreach (var pageRef in Model.Pager)
+                        {
+                            if (pageRef == Model.Pager.CurrentPage)
+                            {
+                                <b>@pageRef.Text</b>
+                            }
+                            else
+                            {
+
+                                <a title="Page @pageRef.Page"
+               asp-page="/Deliverables/Query"
+               asp-route-currentpage="@pageRef.Page">
+                                    @pageRef.Text
+                                </a>
+                            }
+                        }
+                    }
+                </tr>
+            </tfoot>
+        }
+    }
+    
+</form>
