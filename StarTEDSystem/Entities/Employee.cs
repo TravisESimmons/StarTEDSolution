@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StarTEDSystem.Entities
 {
@@ -10,6 +11,9 @@ namespace StarTEDSystem.Entities
         public int EmployeeID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+
+        [NotMapped]
+        public string FullName { get { return LastName + " , " + FirstName; }}
         public DateTime DateHired { get; set; }
         public DateTime? ReleaseDate { get; set; }
         public int PositionID { get; set; }

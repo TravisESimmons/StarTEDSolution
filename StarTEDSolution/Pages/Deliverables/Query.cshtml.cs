@@ -99,7 +99,7 @@ namespace StarTEDSolution.Pages.Deliverables
 
         public IActionResult OnPostClear()
         {
-            Feedback = "";
+            Feedback = "Search results will be cleared..";
             
             ModelState.Clear();
             return RedirectToPage(new { SearchArg = (string?)null });

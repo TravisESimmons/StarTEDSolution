@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using StarTEDSystem.DAL;
 using StarTEDSystem.Entities;
 
@@ -41,19 +42,12 @@ namespace StarTEDSystem.BLL
         .ThenBy(x => x.FirstName);
 
             totalCount = info.Count();
-            //  Determine the number of rows to skip
-            //  THis skipped count reflects the rows of the previous pages
-            //  Remember the pagenumber is a natural number (1,2,3,....)
-            //  This needs to be treated as an index (natural number -1)  Zero base
-            //  The number of rows to skip is index * pagesize
+
             int skipRows = (pageNumber - 1) * pageSize;
-            //  Return only the required number of rows.
-            //  This will be done using filters belonging to LINQ
-            //  Use the filter .Skip(n) to skip over n rows from the beginning of a collection
-            //  Use the filter .Take(n) to take the next n rows from a collection
+
             return info.Skip(skipRows).Take(pageSize).ToList();
 
-            //  This is the return statement that would be used IF no paging is being implemented
+
         }
 
         public Employee GetByID(int employeeid)
@@ -64,5 +58,65 @@ namespace StarTEDSystem.BLL
             
         }
         #endregion
+
+        public int Employee_AddEmployee(Employee item)
+        {
+
+            bool exists = _context.Employees.Any(x => x.EmployeeID == item.EmployeeID);
+
+            if (exists != null)
+            {
+                throw new Exception($"Employee: {item.FullName} is already on file with the entered information.");
+            }
+
+
+            _context.Employees.Add(item);
+
+
+            _context.SaveChanges();
+
+           
+            return item.EmployeeID;
+        }
+
+        public int Employee_DeleteEmployee(Employee item)
+        {
+
+            bool exists = _context.Employees.Any(x => x.EmployeeID == item.EmployeeID);
+
+     
+            if (!exists)
+            {
+                throw new Exception($"Existing Employee Data can NOT be deleted from the database.");
+            }
+
+
+            item.ReleaseDate = DateTime.Now;
+            EntityEntry<Employee> updating = _context.Entry(item);
+           
+            updating.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+
+            _context.SaveChanges();
+            return item.EmployeeID;
+        }
+
+        public int Employee_UpdateEmployee(Employee item)
+        {
+           
+            bool exists = _context.Employees.Any(x => x.EmployeeID == item.EmployeeID);
+            
+            if (!exists)
+            {
+                throw new Exception($"");
+            }
+
+           
+            EntityEntry<Employee> updating = _context.Entry(item);
+            
+            updating.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+          
+            _context.SaveChanges();
+            return item.EmployeeID;
+        }
     }
 }
